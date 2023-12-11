@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 
 import matplotlib.image as mpimg
 
+import matplotlib
+matplotlib.use('GTK3Cairo')
+
 import cv2
 
 import sys
@@ -41,30 +44,18 @@ print("Longtitude max: " + str(max(longtitude)) + ", min longtitude :" + str(min
 # BBox = (min(longtitude), max(longtitude),
 #          min(latitude), max(latitude))
 
-BBox = (23.2239, 23.2913, 50.7302, 50.7536)
+BBox = (23.1928, 23.2982, 50.6875, 50.7482)
 
-mapka = mpimg.imread('/home/maciej/Downloads/map.png')
+mapka = plt.imread('/home/maciej/Downloads/map.png')
 
-pts = np.array([[330,620],[950,620],[692,450],[587,450]])
+fig, ax = plt.subplots(figsize = (20,20))
+ax.scatter(longtitude, latitude, zorder=1, alpha= 0.5, c='r', s=10)
 
-#plt.plot(640, 570, "og", markersize=10)  # og:shorthand for green circle
-# plt.scatter(pts[:, 0], pts[:, 1], marker="x", color="red", s=200)
+ax.set_title('Routemap printed on the MAP')
 
-#fig, ax = plt.subplots(figsize = (8,7))
-mapka = cv2.circle(mapka, (50, 50), radius=10, color=(0, 0, 255), thickness=-1)
+ax.set_xlim(BBox[0],BBox[1])
+ax.set_ylim(BBox[2],BBox[3])
 
-# ax.scatter(longtitude, latitude, zorder=1, alpha= 0.2, c='b', s=10)
-# ax.set_title('Plotting Spatial Data on Riyadh Map')
-# ax.set_xlim(BBox[0],BBox[1])
-# ax.set_ylim(BBox[2],BBox[3])
+ax.imshow(mapka, zorder=0, extent = BBox, aspect= 'equal')
 
-# ax.imshow(mapka, zorder=0, extent = BBox, aspect= 'equal')
-
-# my_image = mpimg.imread("/content/drive/MyDrive/kote-puerto-so5nsYDOdxw-unsplash.jpg")
-
-#plt.imshow(mapka)
-
-#img_read = cv2.imread('/home/maciej/Downloads/map.png')
-cv2.imshow('itslinuxfoss',mapka)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+plt.show()
